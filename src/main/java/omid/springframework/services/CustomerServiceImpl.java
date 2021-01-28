@@ -2,6 +2,7 @@ package omid.springframework.services;
 
 import omid.springframework.api.v1.mapper.CustomerMapper;
 import omid.springframework.api.v1.model.CustomerDTO;
+import omid.springframework.domain.Customer;
 import omid.springframework.repositories.CustomerRepository;
 import org.springframework.stereotype.Service;
 
@@ -36,5 +37,14 @@ public class CustomerServiceImpl implements CustomerService{
         return customerRepository.findById(id)
                 .map(customerMapper::customerToCustomerDTO)
                 .orElseThrow(RuntimeException::new);
+    }
+
+    @Override
+    public CustomerDTO createNewCustomer(CustomerDTO customerDTO) {
+        Customer customer = customerMapper.customerDTOToCustomer(customerDTO);
+        Customer savedCustomer = customerRepository.save(customer);
+        CustomerDTO returnedCustomerDTO = customerMapper.customerToCustomerDTO(savedCustomer);
+        returnedCustomerDTO.setCustomerUrl("/api/v1/customer/"+savedCustomer.getId());
+        return returnedCustomerDTO;
     }
 }
