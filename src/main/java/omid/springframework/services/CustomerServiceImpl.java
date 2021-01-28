@@ -1,5 +1,6 @@
 package omid.springframework.services;
 
+import lombok.extern.slf4j.Slf4j;
 import omid.springframework.api.v1.mapper.CustomerMapper;
 import omid.springframework.api.v1.model.CustomerDTO;
 import omid.springframework.domain.Customer;
@@ -7,8 +8,10 @@ import omid.springframework.repositories.CustomerRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 @Service
+@Slf4j
 public class CustomerServiceImpl implements CustomerService{
 
     private final CustomerMapper customerMapper;
@@ -41,10 +44,20 @@ public class CustomerServiceImpl implements CustomerService{
 
     @Override
     public CustomerDTO createNewCustomer(CustomerDTO customerDTO) {
-        Customer customer = customerMapper.customerDTOToCustomer(customerDTO);
+        return saveAndReturnDTO(customerMapper.customerDTOToCustomer(customerDTO));
+
+    }
+    private CustomerDTO saveAndReturnDTO(Customer customer){
         Customer savedCustomer = customerRepository.save(customer);
         CustomerDTO returnedCustomerDTO = customerMapper.customerToCustomerDTO(savedCustomer);
         returnedCustomerDTO.setCustomerUrl("/api/v1/customer/"+savedCustomer.getId());
         return returnedCustomerDTO;
+    }
+    @Override
+    public CustomerDTO saveCustomerByDTO(Long id, CustomerDTO customerDTO) {
+        Customer customer = customerMapper.customerDTOToCustomer(customerDTO);
+        customer.setId(id);
+
+        return saveAndReturnDTO(customer);
     }
 }
