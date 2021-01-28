@@ -2,6 +2,7 @@ package omid.springframework.controllers.v1;
 
 import omid.springframework.api.v1.model.CategoryDTO;
 import omid.springframework.services.CategoryService;
+import omid.springframework.services.ResourceNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -34,6 +35,7 @@ class CategoryControllerTest {
     void setUp() {
         MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(categoryController)
+                .setControllerAdvice(new RestResponseEntityExceptionHandler())
                 .build();
     }
     @Test
@@ -63,5 +65,12 @@ class CategoryControllerTest {
         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name",equalTo(NAME)));
+    }
+    @Test
+    public void testGetByNameNotFound()throws Exception{
+        when(categoryService.getCategoryByName(anyString())).thenThrow(ResourceNotFoundException.class);
+        mockMvc.perform(MockMvcRequestBuilders.get(CategoryController.BASE_URL+"/Foo")
+        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 }
