@@ -8,8 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @Controller
 @RequestMapping("/api/v1/customers")
 public class CustomerController {
@@ -39,5 +37,12 @@ public class CustomerController {
     @PutMapping({"/{id}"})
     public ResponseEntity<CustomerDTO> updateCustomer(@PathVariable Long id , @RequestBody CustomerDTO customerDTO){
         return new ResponseEntity<CustomerDTO>(customerService.saveCustomerByDTO(id,customerDTO),HttpStatus.OK);
+    }
+
+
+    @DeleteMapping({"/{id}"})
+    public ResponseEntity<Void> deleteCustomer(@PathVariable Long id){
+        customerService.deleteCustomreById(id);
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 }
