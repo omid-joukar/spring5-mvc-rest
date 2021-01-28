@@ -6,6 +6,7 @@ import omid.springframework.bootstrap.BootStrap;
 import omid.springframework.domain.Customer;
 import omid.springframework.repositories.CategoryRepository;
 import omid.springframework.repositories.CustomerRepository;
+import omid.springframework.repositories.VendorRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,16 +25,20 @@ import static org.junit.Assert.assertThat;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 public class CustomerServiceImplIT {
+
     @Autowired
     CustomerRepository customerRepository;
     @Autowired
     CategoryRepository categoryRepository;
+    @Autowired
+    VendorRepository vendorRepository;
+
     CustomerService customerService;
     @Before
     public void setUp()throws Exception{
         System.out.println("Loading Data");
         System.out.println(customerRepository.findAll().size());
-        BootStrap bootStrap = new BootStrap(categoryRepository,customerRepository);
+        BootStrap bootStrap = new BootStrap(categoryRepository,customerRepository, vendorRepository);
         bootStrap.run();
         customerService = new CustomerServiceImpl(CustomerMapper.INSTANCE,customerRepository);
     }

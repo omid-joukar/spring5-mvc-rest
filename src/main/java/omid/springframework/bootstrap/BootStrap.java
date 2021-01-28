@@ -2,8 +2,10 @@ package omid.springframework.bootstrap;
 
 import omid.springframework.domain.Category;
 import omid.springframework.domain.Customer;
+import omid.springframework.domain.Vendor;
 import omid.springframework.repositories.CategoryRepository;
 import omid.springframework.repositories.CustomerRepository;
+import omid.springframework.repositories.VendorRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -12,10 +14,12 @@ import org.springframework.stereotype.Component;
 public class BootStrap implements CommandLineRunner {
     private final CategoryRepository categoryRepository;
     private final CustomerRepository customerRepository;
+    private final VendorRepository vendorRepository;
 
-    public BootStrap(CategoryRepository categoryRepository, CustomerRepository customerRepository) {
+    public BootStrap(CategoryRepository categoryRepository, CustomerRepository customerRepository, VendorRepository vendorRepository) {
         this.categoryRepository = categoryRepository;
         this.customerRepository = customerRepository;
+        this.vendorRepository = vendorRepository;
     }
 
     @Override
@@ -25,7 +29,19 @@ public class BootStrap implements CommandLineRunner {
 
         loadategories();
 
+        loadVendors();
 
+
+    }
+
+    private void loadVendors() {
+        Vendor vendor = new Vendor();
+        vendor.setName("ALL Fruits are Here");
+        vendorRepository.save(vendor);
+
+        Vendor vendor1 = new Vendor();
+        vendor1.setName("All Vege are Here");
+        vendorRepository.save(vendor1);
     }
 
     private void loadategories() {
