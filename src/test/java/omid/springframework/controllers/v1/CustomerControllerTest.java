@@ -1,7 +1,7 @@
 package omid.springframework.controllers.v1;
 
 import omid.springframework.api.v1.model.CustomerDTO;
-import omid.springframework.domain.Customer;
+
 import omid.springframework.services.CustomerService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
