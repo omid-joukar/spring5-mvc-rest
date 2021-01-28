@@ -1,4 +1,4 @@
-package omid.springframework.controllers.v1;
+package omid.springframework.controllers;
 
 import omid.springframework.services.ResourceNotFoundException;
 import org.springframework.http.HttpHeaders;
