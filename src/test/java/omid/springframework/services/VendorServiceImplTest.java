@@ -2,6 +2,7 @@ package omid.springframework.services;
 
 import omid.springframework.api.v1.mapper.VendorMapper;
 import omid.springframework.api.v1.model.VendorDTO;
+import omid.springframework.api.v1.model.VendorListDTO;
 import omid.springframework.domain.Vendor;
 import omid.springframework.repositories.VendorRepository;
 import org.junit.Before;
@@ -11,10 +12,16 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.*;
 
 public class VendorServiceImplTest {
@@ -41,8 +48,8 @@ public class VendorServiceImplTest {
         vendorRepository.save(vendor1);
         vendorRepository.save(vendor2);
         when(vendorRepository.findAll()).thenReturn(Arrays.asList(vendor1,vendor2));
-        List<VendorDTO> vendorDTOS = vendorService.getAllVendors();
-        assertEquals(2,vendorDTOS.size());
+        VendorListDTO vendorListDTO = vendorService.getAllVendors();
+        assertEquals(2,vendorListDTO.getVendors().size());
 
     }
 
@@ -51,13 +58,17 @@ public class VendorServiceImplTest {
         Vendor vendor = new Vendor();
         vendor.setId(1L);
         vendor.setName("omid");
-        when(vendorRepository.findById(anyLong())).thenReturn(java.util.Optional.of(vendor));
+        given(vendorRepository.findById(anyLong())).willReturn(java.util.Optional.of(vendor));
         VendorDTO vendorDTO = vendorService.getVendorById(1L);
-        assertNotNull(vendorDTO);
-        assertEquals(vendorDTO.getName(),vendor.getName());
-        assertEquals("/api/v1/vendors/1" , vendorDTO.getVendorUrl());
+        then(vendorRepository).should(times(1)).findById(anyLong());
+        assertThat(vendorDTO.getName(), is(equalTo(vendor.getName())));
+    }
 
-
+    @Test(expected = ResourceNotFoundException.class)
+    public void findByIdNotFound()throws Exception{
+        given(vendorRepository.findById(anyLong())).willReturn(Optional.empty());
+        VendorDTO vendorDTO = vendorService.getVendorById(1L);
+        then(vendorRepository).should(times(1)).findById(anyLong());
     }
 
     @Test
