@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 @EnableSwagger2
 @Configuration
-public class SwaggerConfig extends WebMvcConfigurationSupport {
+public class SwaggerConfig { //} extends WebMvcConfigurationSupport {
 
     @Bean
     public Docket api(){
@@ -32,12 +32,12 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
 
     private ApiInfo metaData(){
 
-        Contact contact = new Contact("Omid Joukar", "https://https://github.com/omid-joukar/",
+        Contact contact = new Contact("Omid Joukar", "https://github.com/omid-joukar/",
                 "joukaromid6@gmail.com");
 
         return new ApiInfo(
-                "Spring Framework Guru",
-                "Spring Framework 5: Beginner to Guru",
+                "Spring Framework Omid",
+                "Spring Framework 5: Beginner to Omid",
                 "1.0",
                 "Terms of Service: blah",
                 contact,
@@ -45,12 +45,12 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
                 "https://www.apache.org/licenses/LICENSE-2.0",
                 new ArrayList<>());
     }
-    @Override
-    protected void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("swagger-ui.html")
-                .addResourceLocations("classpath:/META-INF/resources/");
-
-        registry.addResourceHandler("/webjars/**")
-                .addResourceLocations("classpath:/META-INF/resources/webjars/");
-    }
+//    @Override
+//    protected void addResourceHandlers(ResourceHandlerRegistry registry) {
+//        registry.addResourceHandler("swagger-ui.html")
+//                .addResourceLocations("classpath:/META-INF/resources/");
+//
+//        registry.addResourceHandler("/webjars/**")
+//                .addResourceLocations("classpath:/META-INF/resources/webjars/");
+//    }
 }

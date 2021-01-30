@@ -1,11 +1,13 @@
 package omid.springframework.controllers.v1;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import omid.springframework.api.v1.model.CustomerDTO;
 import omid.springframework.api.v1.model.CustomerListDTO;
 import omid.springframework.services.CustomerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
+@Api("configuration  s ada dad")
 @RestController
 @RequestMapping(CustomerController.BASE_URL)
 public class CustomerController {
@@ -15,7 +17,7 @@ public class CustomerController {
     public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
     }
-
+    @ApiOperation(value = "This will get a list of customers",notes = "This are some notes about the API. ")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public CustomerListDTO getAllCustomers(){
