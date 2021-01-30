@@ -7,7 +7,7 @@ import omid.springframework.api.v1.model.CustomerListDTO;
 import omid.springframework.services.CustomerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-@Api("configuration  s ada dad")
+@Api(description = "This is Customer Controller")
 @RestController
 @RequestMapping(CustomerController.BASE_URL)
 public class CustomerController {
