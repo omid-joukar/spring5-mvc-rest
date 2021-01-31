@@ -4,7 +4,7 @@ import omid.springframework.api.v1.model.CategoryDTO;
 import omid.springframework.domain.Category;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CategoryMapperTest {
     CategoryMapper categoryMapper  = CategoryMapper.INSTANCE;

@@ -4,7 +4,6 @@ import omid.springframework.api.v1.model.CategoryDTO;
 import omid.springframework.api.v1.model.CategoryListDTO;
 import omid.springframework.services.CategoryService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

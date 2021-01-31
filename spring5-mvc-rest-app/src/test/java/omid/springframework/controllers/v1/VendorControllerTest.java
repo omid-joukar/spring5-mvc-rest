@@ -14,6 +14,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.mockito.BDDMockito.then;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -24,7 +25,6 @@ import java.util.Arrays;
 import static omid.springframework.controllers.v1.AbstractRestControllerTest.asJsonString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 
@@ -71,7 +71,7 @@ public class VendorControllerTest {
         mockMvc.perform(get(VendorController.BASE_URL + "/1")
                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name", equalTo(vendorDTO_1.getName())));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name", equalTo(vendorDTO_1.getName())));
     }
 
     @Test
@@ -83,7 +83,7 @@ public class VendorControllerTest {
                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
                 .content(asJsonString(vendorDTO_1)))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.name", equalTo(vendorDTO_1.getName())));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name", equalTo(vendorDTO_1.getName())));
     }
 
     @Test
@@ -95,7 +95,7 @@ public class VendorControllerTest {
                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
                 .content(asJsonString(vendorDTO_1)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name", equalTo(vendorDTO_1.getName())));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name", equalTo(vendorDTO_1.getName())));
     }
 
     @Test
@@ -106,7 +106,7 @@ public class VendorControllerTest {
                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
                 .content(asJsonString(vendorDTO_1)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name", equalTo(vendorDTO_1.getName())));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name", equalTo(vendorDTO_1.getName())));
     }
 
     @Test
