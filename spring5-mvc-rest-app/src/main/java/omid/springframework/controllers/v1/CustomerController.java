@@ -2,8 +2,8 @@ package omid.springframework.controllers.v1;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import omid.springframework.api.v1.model.CustomerDTO;
-import omid.springframework.api.v1.model.CustomerListDTO;
+import omid.springframework.model.CustomerDTO;
+import omid.springframework.model.CustomerListDTO;
 import omid.springframework.services.CustomerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +21,9 @@ public class CustomerController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public CustomerListDTO getAllCustomers(){
-        return new CustomerListDTO(customerService.getAllCustomers());
+        CustomerListDTO  customerListDTO = new CustomerListDTO();
+        customerListDTO.getCustomers().addAll(customerService.getAllCustomers());
+        return customerListDTO;
     }
 
     @GetMapping("/{id}")

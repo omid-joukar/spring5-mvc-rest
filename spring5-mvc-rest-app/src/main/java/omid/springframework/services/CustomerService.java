@@ -1,9 +1,7 @@
 package omid.springframework.services;
 
-import omid.springframework.api.v1.model.CustomerDTO;
-
 import java.util.List;
-
+import omid.springframework.model.CustomerDTO;
 public interface CustomerService {
     List<CustomerDTO> getAllCustomers();
     CustomerDTO getCustomerById(Long id);

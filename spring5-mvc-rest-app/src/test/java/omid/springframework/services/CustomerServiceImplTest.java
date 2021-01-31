@@ -1,10 +1,10 @@
 package omid.springframework.services;
 
 import omid.springframework.api.v1.mapper.CustomerMapper;
-import omid.springframework.api.v1.model.CustomerDTO;
 
 import omid.springframework.domain.Customer;
 import omid.springframework.repositories.CustomerRepository;
+import omid.springframework.model.CustomerDTO;
 
 import org.junit.Before;
 import org.junit.Test;

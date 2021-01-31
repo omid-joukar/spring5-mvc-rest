@@ -2,14 +2,13 @@ package omid.springframework.services;
 
 import lombok.extern.slf4j.Slf4j;
 import omid.springframework.api.v1.mapper.CustomerMapper;
-import omid.springframework.api.v1.model.CustomerDTO;
 import omid.springframework.controllers.v1.CustomerController;
 import omid.springframework.domain.Customer;
 import omid.springframework.repositories.CustomerRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
-
+import omid.springframework.model.CustomerDTO;
 
 @Service
 @Slf4j

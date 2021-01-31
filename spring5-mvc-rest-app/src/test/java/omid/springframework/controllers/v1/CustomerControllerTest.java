@@ -1,6 +1,6 @@
 package omid.springframework.controllers.v1;
 
-import omid.springframework.api.v1.model.CustomerDTO;
+import omid.springframework.model.CustomerDTO;
 
 import omid.springframework.controllers.RestResponseEntityExceptionHandler;
 import omid.springframework.services.CustomerService;
@@ -81,7 +81,8 @@ class CustomerControllerTest {
     }
 
     @Test
-    void createNewCustomer() throws Exception {
+    public void createNewCustomer() throws Exception {
+        //given
         CustomerDTO customer = new CustomerDTO();
         customer.setFirstname("Fred");
         customer.setLastname("Flintstone");
@@ -89,17 +90,18 @@ class CustomerControllerTest {
         CustomerDTO returnDTO = new CustomerDTO();
         returnDTO.setFirstname(customer.getFirstname());
         returnDTO.setLastname(customer.getLastname());
-        returnDTO.setCustomerUrl("/api/v1/customers/1");
+        returnDTO.setCustomerUrl(CustomerController.BASE_URL + "/1");
 
-        when(customerService.createNewCustomer(customer)).thenReturn(returnDTO);
+        when(customerService.createNewCustomer(any())).thenReturn(returnDTO);
 
         //when/then
-        mockMvc.perform(post("/api/v1/customers")
-                .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
+        mockMvc.perform(post(CustomerController.BASE_URL)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(customer)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.firstname", equalTo("Fred")))
-                .andExpect(jsonPath("$.customer_url", equalTo("/api/v1/customers/1")));
+                .andExpect(jsonPath("$.customerUrl", equalTo(CustomerController.BASE_URL + "/1")));
     }
 
     @Test
@@ -118,7 +120,7 @@ class CustomerControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.firstname", equalTo("omid")))
                 .andExpect(jsonPath("$.lastname", equalTo("joukar")))
-                .andExpect(jsonPath("$.customer_url", equalTo("/api/v1/customers/1")));
+                .andExpect(jsonPath("$.customerUrl", equalTo("/api/v1/customers/1")));
     }
 
     @Test
