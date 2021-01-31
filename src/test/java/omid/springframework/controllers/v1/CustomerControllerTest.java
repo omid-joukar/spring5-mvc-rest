@@ -61,7 +61,7 @@ class CustomerControllerTest {
         customerDTOS.add(customerDTO2);
         when(customerService.getAllCustomers()).thenReturn(customerDTOS);
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/customers/")
-                .contentType(MediaType.APPLICATION_JSON))
+                .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.customers", hasSize(2)));
     }
@@ -75,7 +75,7 @@ class CustomerControllerTest {
         customerDTO1.setCustomerUrl("/api/v1/customer/1");
         when(customerService.getCustomerById(anyLong())).thenReturn(customerDTO1);
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/customers/1")
-                .contentType(MediaType.APPLICATION_JSON))
+                .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.firstname", equalTo("omid")));
     }
@@ -95,7 +95,7 @@ class CustomerControllerTest {
 
         //when/then
         mockMvc.perform(post("/api/v1/customers")
-                .contentType(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
                 .content(asJsonString(customer)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.firstname", equalTo("Fred")))
@@ -113,7 +113,7 @@ class CustomerControllerTest {
         returnDto.setCustomerUrl("/api/v1/customers/1");
         when(customerService.saveCustomerByDTO(anyLong(), any(CustomerDTO.class))).thenReturn(returnDto);
         mockMvc.perform(put("/api/v1/customers/1")
-                .contentType(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
                 .content(asJsonString(customer)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.firstname", equalTo("omid")))
@@ -124,7 +124,7 @@ class CustomerControllerTest {
     @Test
     public void testDeleteCustomer() throws Exception {
         mockMvc.perform(delete("/api/v1/customers/1")
-                .contentType(MediaType.APPLICATION_JSON))
+                .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
         verify(customerService).deleteCustomreById(anyLong());
     }
